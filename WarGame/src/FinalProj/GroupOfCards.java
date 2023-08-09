@@ -9,7 +9,7 @@ public class GroupOfCards {
     private ArrayList<Card> _deckOfCards;
     private int _deckSize;
     //This is a global variable that determines the possible max size of the deck. Updates based on the Card class
-    private static final int STANDARD_DECK_SIZE = Card.MAX_DECK_SIZE; 
+    private static final int STANDARD_DECK_SIZE = FinalProj.Card.MAX_DECK_SIZE; 
 
     public GroupOfCards() {
         _deckOfCards = new ArrayList<>();
