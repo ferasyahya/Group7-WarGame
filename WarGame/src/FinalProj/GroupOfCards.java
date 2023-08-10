@@ -44,17 +44,3 @@ public class GroupOfCards {
 
     }
 }
-
-// Random random = new Random();
-
-// int numRanks = Card.Rank.values().length;
-// int numSuits = Card.Suit.values().length;
-
-// for (int i = 0; i < _decksize; i++){
-
-// Rank randomRank = Card.Rank.values()[random.nextInt(numRanks)];
-// Suit randomSuit = Card.Suit.values()[random.nextInt(numSuits)];
-
-// Card card = new Card (randomRank, randomSuit);
-
-// _cards.add(card);

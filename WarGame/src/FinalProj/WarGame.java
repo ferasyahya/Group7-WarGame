@@ -51,9 +51,23 @@ public class WarGame extends Game {
         for (Card card : _deck.getDeckOfCards()) {
             System.out.println(++count + ": " + card);
         }
-        System.out.println("Press 1 to shuffle cards and get your hand..");
-        // int userinput = input.nextInt();
-        if (input.nextInt() != 0) {
+        int userinput;
+        while (true) {
+            System.out.println("Press 1 to shuffle cards and get your hand..");
+            try {
+                userinput = input.nextInt();
+                if (userinput == 0) {
+                    System.out.println("You quit");
+                    System.exit(0);
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input!");
+                input.nextLine();
+            }
+        }
+
+        if (userinput != 0) {
             deal();
             presentHand();
         }
@@ -74,7 +88,7 @@ public class WarGame extends Game {
         if (input.nextInt() == 1) {
             resetDecks();
             Play();
-        }else{
+        } else {
             System.out.println("You quit");
             System.exit(0);
         }
@@ -134,8 +148,9 @@ public class WarGame extends Game {
 
                     displayInformation();
 
-                    if (warPlayer1.totalCards() == 0 || warPlayer2.totalCards() == 0)
+                    if (warPlayer1.totalCards() == 0 || warPlayer2.totalCards() == 0) {
                         break;
+                    }
                 }
 
             } catch (InputMismatchException e) {
@@ -151,7 +166,6 @@ public class WarGame extends Game {
     /*
      * Helper methods used only within this class
      */
-
     /**
      * Clears all decks of both players
      */
@@ -163,15 +177,16 @@ public class WarGame extends Game {
     }
 
     /**
-     * Transfers cards from the discard pile of the selected player to the main deck
-     * 
+     * Transfers cards from the discard pile of the selected player to the main
+     * deck
+     *
      * @param player The player to transfer the cards for
      */
     private void transferFromDiscard(WarGamePlayer player) {
-        System.out.println("Main deck is out of cards, transferring cards from discard pile..");
-        if (player.getDiscardHand().isEmpty())
+        //System.out.println("Main deck is out of cards, transferring cards from discard pile..");
+        if (player.getDiscardHand().isEmpty()) {
             declareWinner();
-        else {
+        } else {
             shuffle(player.getDiscardHand());
             player.setHand(player.getDiscardHand());
             player.getDiscardHand().clear();
@@ -183,15 +198,19 @@ public class WarGame extends Game {
      * Prints a summary of the round results
      */
     private void displayInformation() {
+        System.out.println("-----------------------------------------------");
         System.out.println("\nYou have a total of " + warPlayer1.totalCards() + " on hand");
-        System.out.println("\nYour Main deck: ");
-        warPlayer1.displayDeck(warPlayer1.getHand());
+
+        //System.out.println("\nYour Main deck: ");
+        //warPlayer1.displayDeck(warPlayer1.getHand());
         System.out.println("\nYour discard pile: ");
         warPlayer1.displayDeck(warPlayer1.getDiscardHand());
+
         System.out.println("-----------------------------------------------");
         System.out.println("\nYour opponent has a total of " + warPlayer2.totalCards() + " on hand");
         //System.out.println("\nOpponent's Main deck: ");
         //warPlayer1.displayDeck(warPlayer2.getHand());
+
         System.out.println("\nOpponent's discard pile: ");
         warPlayer2.displayDeck(warPlayer2.getDiscardHand());
     }
@@ -201,7 +220,6 @@ public class WarGame extends Game {
      * result is a tie
      */
     private void declareWar() {
-        System.out.println("A war has occured!!!");
         int result = 0;
 
         // Create a dedicated pile that will store the cards being placed during the
@@ -219,6 +237,7 @@ public class WarGame extends Game {
 
         // Start a while loop that will keep looping until the war ends.
         do {
+            System.out.println("\nA war has occured!!!");
 
             // A for loop that runs three times. This simulates displaying the three cards
             // face down.
@@ -276,9 +295,9 @@ public class WarGame extends Game {
 
             // Display the cards in the war pile once the two players have put down their
             // cards.
-            for (Card card : warPile) {
-                System.out.println(card);
-            }
+//            for (Card card : warPile) {
+//                System.out.println(card);
+//            }
 
             // Check that both players have enough cards in their main deck before
             // displaying the last card.
@@ -290,7 +309,7 @@ public class WarGame extends Game {
             }
             // Compare the fourth cards being placed down which will determine who wins the
             // war
-            System.out.println("The cards in the war pile are: ");
+            System.out.println("The being compared are: ");
             System.out.println(warPlayer1.cardAtIndex(0));
             System.out.println(warPlayer2.cardAtIndex(0));
 
@@ -305,7 +324,7 @@ public class WarGame extends Game {
 
             // Determine who takes the cards from the war pile to their discarded deck.
             if (result == -1) {
-                System.out.println("You won the WAR!!!");
+                System.out.println(_Player1.get_name() + " won the WAR!!!");
                 warPlayer1.getDiscardHand().addAll(warPile);
                 break;
 
